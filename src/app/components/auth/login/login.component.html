@@ -1,30 +1,91 @@
-<div class="login-container">
-  <h2>Iniciar Sesión</h2>
+<section class="vh-100 radial-bg-custom">
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start h-100 d-flex align-items-center">
+    <div class="row gx-lg-5 align-items-center w-100">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="col-lg-6 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
+        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+          Bienvenido al <br />
+          <span class="accent-color">Sistema ERP/CRM</span>
+        </h1>
+        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+          Gestiona tus recursos y clientes con la máxima eficiencia.
+          Accede a tu plataforma central de gestión empresarial.
+        </p>
+      </div>
 
-    <div class="form-group">
-      <label for="usernameOrEmail">Usuario:</label>
-      <input id="username" type="text" formControlName="usernameOrEmail">
-      @if (loginForm.get('usernameOrEmail')?.touched && loginForm.get('usernameOrEmail')?.hasError('required')) &#123;
-      <div class="error-message">El usuario es requerido.</div>
-      }
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+
+        <div id="radius-shape-1" class="position-absolute rounded-circle shadow"></div>
+        <div id="radius-shape-2" class="position-absolute shadow"></div>
+
+        <div class="card bg-light-transparent shadow-lg">
+          <div class="card-body p-4 p-md-5">
+
+            <h4 class="card-title text-center text-primary mb-4">Iniciar Sesión</h4>
+            <hr class="mb-4">
+
+            <!-- Mensaje de error -->
+            <div class="alert alert-danger text-center" *ngIf="loginError">
+              <p>{{ loginError }}</p>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              <!-- Campo Usuario -->
+              <div class="form-group mb-4">
+                <label class="form-label" for="username">Usuario</label>
+                <input
+                  type="text"
+                  id="username"
+                  formControlName="usernameOrEmail"
+                  class="form-control form-control-lg"
+                  placeholder="Introduce tu usuario"
+                  [class.is-invalid]="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+                />
+                <div class="invalid-feedback"
+                     *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')">
+                  El usuario es requerido.
+                </div>
+              </div>
+
+              <!-- Campo Contraseña -->
+              <div class="form-group mb-4">
+                <label class="form-label" for="password">Contraseña</label>
+                <input
+                  type="password"
+                  id="password"
+                  formControlName="password"
+                  class="form-control form-control-lg"
+                  placeholder="Introduce tu contraseña"
+                  [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                />
+                <div class="invalid-feedback"
+                     *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+                  La contraseña es requerida.
+                </div>
+              </div>
+
+              <!-- Botón de acceso -->
+              <div class="d-grid pt-2">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg btn-block"
+                  [disabled]="loginForm.invalid || isLoading"
+                >
+                  <span *ngIf="isLoading; else acceder">
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Accediendo...
+                  </span>
+                  <ng-template #acceder>
+                    Acceder
+                  </ng-template>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="password">Contraseña:</label>
-      <input id="password" type="password" formControlName="password">
-      @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) &#123;
-      <div class="error-message">La contraseña es requerida.</div>
-      }
-    </div>
-
-    @if (loginError) &#123;
-    <div class="alert alert-danger">{{ loginError }}</div>
-    }
-
-    <button type="submit" [disabled]="loginForm.invalid || isLoading">
-      {{ isLoading ? 'Cargando...' : 'Entrar' }}
-    </button>
-  </form>
-</div>
+  </div>
+</section>
