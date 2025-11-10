@@ -1,0 +1,10 @@
+<div class="app-wrapper d-flex">
+  <app-sidebar [class.closed]="!(isSidebarOpen$ | async)"></app-sidebar>
+  <div class="content-wrapper">
+    <app-navbar></app-navbar>
+
+    <main class="main-content p-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.navbar {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: hsl(219, 41%, 35%) !important;
+}
+
+.navbar .btn i,
+.navbar .btn,
+button.btn.text-white {
+  color: hsl(219, 41%, 35%) !important;
+}
+
+button.btn.text-white:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+}
+
+.navbar .dropdown-menu {
+  background-color: rgba(30, 30, 30, 0.95);
+  border: none;
+}

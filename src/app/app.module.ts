@@ -9,12 +9,18 @@ import {LoginComponent} from './components/auth/login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import { MainLayoutComponent } from './components/layaout/main-layout/main-layout.component';
+import { NavbarComponent } from './components/layaout/navbar/navbar.component';
+import { SidebarComponent } from './components/layaout/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    MainLayoutComponent,
+    NavbarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
