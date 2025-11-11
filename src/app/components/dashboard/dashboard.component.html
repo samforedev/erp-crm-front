@@ -1,1 +1,71 @@
-<p>dashboard works!</p>
+<div class="container py-5">
+  <h3 class="fw-bold text-center mb-5">
+    <i class="bi bi-graph-up-arrow me-2"></i> Panel de Reportes
+  </h3>
+
+  <!-- === CARDS DE RESUMEN === -->
+  <div class="row justify-content-center g-4 mb-5">
+    <div
+      class="col-md-3 col-sm-6"
+      *ngFor="let card of summaryCards"
+    >
+      <div class="card dashboard-card shadow-sm border-0 text-center">
+        <div class="card-body p-5">
+          <div class="icon-circle text-white mb-3 bg-custom">
+            <i [class]="card.icon + ' fs-2'"></i>
+          </div>
+          <h5 class="fw-bold mb-1">{{ card.title }}</h5>
+          <h4 class="fw-semibold mb-0">{{ card.value }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === GRÁFICOS === -->
+  <div class="container mt-5">
+    <div class="row g-4">
+
+      <!-- Clientes por estado -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 rounded-4 h-100">
+          <h6 class="fw-bold mb-3">
+            <i class="bi bi-people-fill me-2 text-primary"></i> Clientes por estado
+          </h6>
+          <canvas id="customersChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Estado de empleados -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 rounded-4 h-100">
+          <h6 class="fw-bold mb-3">
+            <i class="bi bi-person-check-fill me-2 text-danger"></i> Estado de empleados
+          </h6>
+          <canvas id="employeeStatusChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Clientes nuevos por mes -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 rounded-4 h-100">
+          <h6 class="fw-bold mb-3">
+            <i class="bi bi-calendar3 me-2 text-warning"></i> Nuevos clientes por mes
+          </h6>
+          <canvas id="customersMonthlyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Empleados por rol -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 rounded-4 h-100">
+          <h6 class="fw-bold mb-3">
+            <i class="bi bi-person-workspace me-2 text-success"></i> Empleados por rol
+          </h6>
+          <canvas id="employeesChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

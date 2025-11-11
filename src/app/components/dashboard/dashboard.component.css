@@ -1,0 +1,39 @@
+.dashboard-card {
+  cursor: pointer;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-custom {
+  background-color: #354f7d;
+}
+.card {
+  border-radius: 2rem;
+}
+
+.card-body {
+  transition: background-color 0.3s;
+  border-radius: 2rem;
+}
+
+.card-body:hover {
+  background-color: #e9ecef;
+}
+
+h3 {
+  letter-spacing: 0.5px;
+}
