@@ -15,6 +15,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CustomerComponent } from './components/insurance/customer/customer.component';
 import {CustomerInterceptor} from "./interceptors/customer.interceptor";
 import { CustomerDetailComponent } from './components/insurance/customer/customer-detail/customer-detail.component';
+import { UsersComponent } from './components/insurance/users/users.component';
+import {UserInterceptor} from "./interceptors/user.interceptor";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { CustomerDetailComponent } from './components/insurance/customer/custome
     SidebarComponent,
     DashboardComponent,
     CustomerComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { CustomerDetailComponent } from './components/insurance/customer/custome
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CustomerInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UserInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

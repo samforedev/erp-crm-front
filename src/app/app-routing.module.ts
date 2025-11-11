@@ -6,6 +6,7 @@ import {MainLayoutComponent} from "./components/layaout/main-layout/main-layout.
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {CustomerComponent} from "./components/insurance/customer/customer.component";
 import {CustomerDetailComponent} from "./components/insurance/customer/customer-detail/customer-detail.component";
+import {UsersComponent} from "./components/insurance/users/users.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'home', component: DashboardComponent },
+      { path: 'erp/users', component: UsersComponent },
       { path: 'crm/customers', component: CustomerComponent },
       { path: 'crm/customers/:id', component: CustomerDetailComponent },
     ]
