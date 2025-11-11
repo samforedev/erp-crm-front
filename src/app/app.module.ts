@@ -17,6 +17,7 @@ import {CustomerInterceptor} from "./interceptors/customer.interceptor";
 import { CustomerDetailComponent } from './components/insurance/customer/customer-detail/customer-detail.component';
 import { UsersComponent } from './components/insurance/users/users.component';
 import {UserInterceptor} from "./interceptors/user.interceptor";
+import { UserDetailComponent } from './components/insurance/users/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {UserInterceptor} from "./interceptors/user.interceptor";
     DashboardComponent,
     CustomerComponent,
     CustomerDetailComponent,
-    UsersComponent
+    UsersComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,

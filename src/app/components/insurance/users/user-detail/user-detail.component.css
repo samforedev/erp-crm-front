@@ -1,0 +1,26 @@
+.card {
+  backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.card-header {
+  backdrop-filter: saturate(180%) blur(10px);
+  background: rgb(53, 79, 126);
+}
+
+.label {
+  color: #6c757d;
+}
+
+.custom-btn {
+  color: #fff;
+}
+
+.custom-btn:hover {
+  color: #1370fb;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.75em;
+}
