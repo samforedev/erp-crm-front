@@ -4,7 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {UserDetail} from "../../../../models/insurance/userModel";
 import {CustomerService} from "../../../../services/insurance/customer.service";
-import {GetAllByAgentId} from "../../../../models/insurance/customerModel";
+import {assignedAgent, CustomerMinimal, GetAllByAgentId} from "../../../../models/insurance/customerModel";
+import * as bootstrap from "bootstrap";
 
 @Component({
   selector: 'app-user-detail',
@@ -24,12 +25,14 @@ export class UserDetailComponent implements OnInit {
   user?: UserDetail;
   customersAgent?: GetAllByAgentId;
   showCustomers = false;
+  availableCustomers: CustomerMinimal[] = [];
 
   ngOnInit(): void {
     this.initialUserData();
   }
 
   customerDetails(customerId: string) {
+    this.closeModal('customerModal');
     this.router.navigate(['/crm/customers', customerId]).then();
   }
 
@@ -44,6 +47,47 @@ export class UserDetailComponent implements OnInit {
       this.loadCustomersForAgent(this.user.id);
     }
   }
+
+  openAddModal() {
+    const modalElement = document.getElementById('customerModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+      this.customerService.getAllCustomers().subscribe({
+        next: (response) => {
+          const allCustomers: CustomerMinimal[] = Array.isArray(response.data)
+            ? response.data
+            : [];
+          const assignedIds = this.customersAgent?.customers?.map((c: any) => c.id) || [];
+          this.availableCustomers = allCustomers.filter(
+            (c) => !assignedIds.includes(c.id)
+          );
+          console.log(this.availableCustomers);
+        },
+        error: (err) => {
+          console.error('Error al obtener clientes:', err);
+          this.availableCustomers = [];
+        },
+      });
+    }
+  }
+
+  assignCustomer(customerId: string) {
+    const request: assignedAgent = {
+      agentId: this.user!.id
+    }
+    this.customerService.assignAgent(customerId, request).subscribe({
+      next: () => {
+        this.loadCustomersForAgent(this.user!.id);
+        this.closeModal('customerModal');
+      },
+      error: (err) => {
+        console.error('Error al asignar cliente:', err);
+        alert('No se pudo asignar el cliente.');
+      }
+    });
+  }
+
 
   private loadCustomersForAgent(agentId: string) {
     console.log('Load CustomersForAgent');
@@ -79,6 +123,14 @@ export class UserDetailComponent implements OnInit {
           this.loading = false;
         }
       });
+    }
+  }
+
+  private closeModal(id: string) {
+    const modalElement = document.getElementById(id);
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
     }
   }
 

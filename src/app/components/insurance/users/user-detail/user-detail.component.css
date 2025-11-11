@@ -20,11 +20,6 @@
   color: #1370fb;
 }
 
-.badge {
-  font-size: 0.9rem;
-  padding: 0.5em 0.75em;
-}
-
 .btn-primary {
   background-color: hsl(219, 41%, 35%);
   border: none;

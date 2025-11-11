@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiSuccessResponse} from "../../models/apiResponse";
 import {
+  assignedAgent,
   CreateCustomerRequest,
   CreateCustomerResponse,
   CustomerDetail,
@@ -41,6 +42,10 @@ export class CustomerService {
 
   getAllByAgentId(agentId: string): Observable<ApiSuccessResponse<GetAllByAgentId>> {
     return this.httpClient.get<ApiSuccessResponse<GetAllByAgentId>>(`${this.AUTH_API_URL}/getByAgentId/${agentId}`);
+  }
+
+  assignAgent(customerId: string, request: assignedAgent): Observable<ApiSuccessResponse<CustomerDetail>> {
+    return this.httpClient.post<ApiSuccessResponse<CustomerDetail>>(`${this.AUTH_API_URL}/${customerId}/assignAgent`, request);
   }
 
 }

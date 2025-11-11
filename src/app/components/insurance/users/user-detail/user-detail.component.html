@@ -126,6 +126,11 @@
 
 <!-- Tabla de clientes -->
 <div *ngIf="showCustomers && customersAgent" class="container py-4 animate__animated animate__fadeIn">
+  <div class="text-end mt-4">
+    <button class="btn btn-primary btn-sm" (click)="openAddModal()">
+      <i class="bi bi-person-plus"></i> Asignar cliente
+    </button>
+  </div>
   <div class="card shadow-sm border-0">
     <div class="card-header bg-light d-flex justify-content-between align-items-center">
       <h6 class="mb-0 fw-bold">
@@ -152,8 +157,11 @@
                   class="badge"
                   [ngClass]="{
                     'bg-success': customer.customerStatus === 'ACTIVE',
-                    'bg-danger': customer.customerStatus === 'INACTIVE',
-                    'bg-secondary': customer.customerStatus !== 'ACTIVE' && customer.customerStatus !== 'INACTIVE'
+                      'bg-warning': customer.customerStatus === 'POTENTIAL',
+                      'bg-secondary': customer.customerStatus === 'NEW',
+                      'bg-danger':
+                        customer.customerStatus === 'INACTIVE' ||
+                        customer.customerStatus === 'LOST'
                   }"
                 >
                   {{ customer.customerStatus }}
@@ -170,6 +178,84 @@
           </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para asignar cliente -->
+<div
+  class="modal fade"
+  id="customerModal"
+  tabindex="-1"
+  aria-labelledby="customerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header text-black">
+        <h5 class="modal-title" id="customerModalLabel">
+          <i class="bi bi-person-plus me-2"></i> Asignar Cliente
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="availableCustomers?.length; else noAvailable">
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead class="table-light">
+              <tr>
+                <th>Email</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let customer of availableCustomers">
+                <td>{{ customer.email }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                      'bg-success': customer.customerStatus === 'ACTIVE',
+                      'bg-warning': customer.customerStatus === 'POTENTIAL',
+                      'bg-secondary': customer.customerStatus === 'NEW',
+                      'bg-danger':
+                        customer.customerStatus === 'INACTIVE' ||
+                        customer.customerStatus === 'LOST'
+                    }"
+                  >
+                    {{ customer.customerStatus }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button
+                    class="btn btn-sm btn-outline-primary me-2"
+                    (click)="customerDetails(customer.id)"
+                  >
+                    <i class="bi bi-search"></i> Detalle
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-success"
+                    (click)="assignCustomer(customer.id)"
+                  >
+                    <i class="bi bi-check-lg"></i> Asignar
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #noAvailable>
+          <div class="text-center text-muted py-4">
+            No hay clientes disponibles para asignar.
+          </div>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

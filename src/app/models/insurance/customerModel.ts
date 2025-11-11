@@ -45,3 +45,7 @@ export interface GetAllByAgentId {
   jobTitle: string;
   customers: CustomerMinimal[]
 }
+
+export interface assignedAgent {
+  agentId: string;
+}
