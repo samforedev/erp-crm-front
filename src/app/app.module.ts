@@ -6,30 +6,37 @@ import { AppRoutingModule } from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import {LoginComponent} from './components/auth/login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import { HomeComponent } from './components/home/home.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { MainLayoutComponent } from './components/layaout/main-layout/main-layout.component';
 import { NavbarComponent } from './components/layaout/navbar/navbar.component';
 import { SidebarComponent } from './components/layaout/sidebar/sidebar.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CustomerComponent } from './components/insurance/customer/customer.component';
+import {CustomerInterceptor} from "./interceptors/customer.interceptor";
+import { CustomerDetailComponent } from './components/insurance/customer/customer-detail/customer-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     MainLayoutComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    DashboardComponent,
+    CustomerComponent,
+    CustomerDetailComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CustomerInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,181 @@
+<div class="container py-4">
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center">
+    {{ error }}
+  </div>
+
+  <div *ngIf="customer && !loading" class="card shadow-lg border-0 rounded-3">
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-person-circle me-2"></i> Detalle del Cliente
+      </h5>
+      <div class="d-flex gap-2">
+        <button class="btn btn-light btn-sm" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Volver
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="openDeleteModal(customer.id)">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body p-4 bg-light">
+      <h6 class="fw-bold mb-3">Información Personal</h6>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="fw-semibold">Nombre completo:</label>
+          <div>{{ customer.people.firstName }} {{ customer.people.lastName }}</div>
+        </div>
+        <div class="col-md-3">
+          <label class="fw-semibold">Tipo Documento:</label>
+          <div>{{ customer.people.documentType }}</div>
+        </div>
+        <div class="col-md-3">
+          <label class="fw-semibold">Número Documento:</label>
+          <div>{{ customer.people.documentNumber }}</div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="fw-semibold">Fecha de Nacimiento:</label>
+          <div>{{ customer.people.birthDate | date }}</div>
+        </div>
+        <div class="col-md-4">
+          <label class="fw-semibold">Correo Electrónico:</label>
+          <div>{{ customer.email }}</div>
+        </div>
+        <div class="col-md-4">
+          <label class="fw-semibold">Teléfono:</label>
+          <div>{{ customer.phoneNumber }}</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h6 class="fw-bold mb-3">Información del Cliente</h6>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label class="fw-semibold">Estado del Cliente:</label>
+          <span class="badge text-dark">{{ customer.customerStatus }}</span>
+        </div>
+        <div class="col-md-3">
+          <label class="fw-semibold">Estado Registro:</label>
+          <span class="badge text-dark">{{ customer.status }}</span>
+        </div>
+        <div class="col-md-3">
+          <label class="fw-semibold">Agente Asignado:</label>
+          <div>{{ customer.assignedAgentId || 'N/A' }}</div>
+        </div>
+        <div class="col-md-3">
+          <label class="fw-semibold">Creado el:</label>
+          <div>{{ customer.createdAt | date: 'short' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar este cliente?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="customerModalLabel">
+          {{ selectedCustomer.email ? 'Editar Cliente' : 'Nuevo Cliente' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveCustomer()" #form="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.firstName" name="firstName" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Apellido</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.lastName" name="lastName" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Tipo de documento</label>
+              <select class="form-select" [(ngModel)]="selectedCustomer.documentType" name="documentType" required>
+                <option value="CC">Cédula de ciudadanía (CC)</option>
+                <option value="CE">Cédula de extranjería (CE)</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Número</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.documentNumber" name="documentNumber" required>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Fecha de nacimiento</label>
+              <input type="date" class="form-control" [(ngModel)]="selectedCustomer.birthDate" name="birthDate" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" [(ngModel)]="selectedCustomer.email" name="email" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.phoneNumber" name="phoneNumber">
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar cambios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Deseas guardar los cambios en la información del cliente?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="confirmUpdate()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,146 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Clientes</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">
+      <i class="bi bi-person-plus me-2"></i> Nuevo Cliente
+    </button>
+  </div>
+
+  <div class="card shadow-sm border-0 bg-glass">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Id</th>
+            <th>Correo electronico</th>
+            <th>Estado del cliente</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let customer of customers">
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.customerStatus }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="customerDetails(customer.id)">
+                <i class="bi bi-search"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editCustomer(customer)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(customer.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="!customers.length">
+            <td colspan="6" class="text-center text-muted py-4">No hay clientes registrados</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para agregar/editar -->
+<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="customerModalLabel">
+          {{ selectedCustomer.email ? 'Editar Cliente' : 'Nuevo Cliente' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveCustomer()" #form="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.firstName" name="firstName" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Apellido</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.lastName" name="lastName" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Tipo de documento</label>
+              <select class="form-select" [(ngModel)]="selectedCustomer.documentType" name="documentType" required>
+                <option value="CC">Cédula de ciudadanía (CC)</option>
+                <option value="CE">Cédula de extranjería (CE)</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Número</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.documentNumber" name="documentNumber" required>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Fecha de nacimiento</label>
+              <input type="date" class="form-control" [(ngModel)]="selectedCustomer.birthDate" name="birthDate" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" [(ngModel)]="selectedCustomer.email" name="email" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedCustomer.phoneNumber" name="phoneNumber">
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar este cliente?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar cambios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Deseas guardar los cambios en la información del cliente?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="confirmUpdate()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
