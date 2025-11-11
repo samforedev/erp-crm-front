@@ -6,7 +6,7 @@ import {
   CreateCustomerRequest,
   CreateCustomerResponse,
   CustomerDetail,
-  CustomerMinimal
+  CustomerMinimal, GetAllByAgentId
 } from "../../models/insurance/customerModel";
 import {EntityCommonsResponse} from "../../models/commons/commonsModel";
 
@@ -38,4 +38,9 @@ export class CustomerService {
   updateCustomer(id: string, request: CreateCustomerRequest): Observable<ApiSuccessResponse<EntityCommonsResponse>> {
     return this.httpClient.put<ApiSuccessResponse<EntityCommonsResponse>>(`${this.AUTH_API_URL}/${id}`, request);
   }
+
+  getAllByAgentId(agentId: string): Observable<ApiSuccessResponse<GetAllByAgentId>> {
+    return this.httpClient.get<ApiSuccessResponse<GetAllByAgentId>>(`${this.AUTH_API_URL}/getByAgentId/${agentId}`);
+  }
+
 }

@@ -24,3 +24,27 @@
   font-size: 0.9rem;
   padding: 0.5em 0.75em;
 }
+
+.btn-primary {
+  background-color: hsl(219, 41%, 35%);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: hsl(218, 81%, 45%);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 0.45em 0.6em;
+  border-radius: 0.5rem;
+}

@@ -37,3 +37,11 @@ export interface People {
   documentNumber: string;
   birthDate: string;
 }
+
+export interface GetAllByAgentId {
+  agentId: string;
+  firstName: string;
+  email: string;
+  jobTitle: string;
+  customers: CustomerMinimal[]
+}
