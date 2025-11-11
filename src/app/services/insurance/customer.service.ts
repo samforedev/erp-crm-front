@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiSuccessResponse} from "../../models/apiResponse";
 import {
-  assignedAgent,
+  assignedAgent, changeCustomerStatus, changeCustomerStatusResponse,
   CreateCustomerRequest,
   CreateCustomerResponse,
   CustomerDetail,
@@ -46,6 +46,10 @@ export class CustomerService {
 
   assignAgent(customerId: string, request: assignedAgent): Observable<ApiSuccessResponse<CustomerDetail>> {
     return this.httpClient.post<ApiSuccessResponse<CustomerDetail>>(`${this.AUTH_API_URL}/${customerId}/assignAgent`, request);
+  }
+
+  updateCustomerStatus(request: changeCustomerStatus): Observable<ApiSuccessResponse<changeCustomerStatusResponse>> {
+    return this.httpClient.post<ApiSuccessResponse<changeCustomerStatusResponse>>(`${this.AUTH_API_URL}/changeCustomerStatus`, request);
   }
 
 }

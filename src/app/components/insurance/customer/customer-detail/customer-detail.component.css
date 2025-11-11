@@ -24,3 +24,26 @@
   font-size: 0.9rem;
   padding: 0.5em 0.75em;
 }
+
+.btn-primary {
+  background-color: hsl(219, 41%, 35%);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: hsl(218, 81%, 45%);
+}
+
+.modal-content {
+  border-radius: 1rem;
+}
+
+.btn-primary {
+  background-color: #354f7d;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2b3f66;
+}
+

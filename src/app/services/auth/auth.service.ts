@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LoginRequest, LoginResponse} from "../../models/auth/authModels";
+import {LoginRequest, LoginResponse, RegisterRequest} from "../../models/auth/authModels";
 import {Observable} from "rxjs";
 import {ApiSuccessResponse} from "../../models/apiResponse";
 
@@ -17,6 +17,11 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<ApiSuccessResponse<LoginResponse>> {
     const url = `${this.AUTH_API_URL}/login`;
     return this.httpClient.post<ApiSuccessResponse<LoginResponse>>(url, credentials);
+  }
+
+  register(request: RegisterRequest): Observable<ApiSuccessResponse<string>> {
+    const url = `${this.AUTH_API_URL}/register`;
+    return this.httpClient.post<ApiSuccessResponse<string>>(url, request);
   }
 
   setToken(token: string): void {

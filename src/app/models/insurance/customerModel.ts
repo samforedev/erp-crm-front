@@ -49,3 +49,13 @@ export interface GetAllByAgentId {
 export interface assignedAgent {
   agentId: string;
 }
+
+export interface changeCustomerStatus {
+  customerId: string;
+  customerStatus: string;
+}
+
+export interface changeCustomerStatusResponse {
+  customerId: string;
+  currentCustomerStatus: string;
+}
