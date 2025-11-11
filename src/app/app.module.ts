@@ -18,6 +18,7 @@ import { CustomerDetailComponent } from './components/insurance/customer/custome
 import { UsersComponent } from './components/insurance/users/users.component';
 import {UserInterceptor} from "./interceptors/user.interceptor";
 import { UserDetailComponent } from './components/insurance/users/user-detail/user-detail.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UserDetailComponent } from './components/insurance/users/user-detail/us
     CustomerComponent,
     CustomerDetailComponent,
     UsersComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
