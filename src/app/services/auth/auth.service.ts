@@ -9,7 +9,7 @@ import {ApiSuccessResponse} from "../../models/apiResponse";
 })
 export class AuthService {
 
-  private readonly AUTH_API_URL = 'http://localhost:8080/api/v1/auth';
+  private readonly AUTH_API_URL = 'https://auth.metacho.com/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
 
   constructor(private httpClient: HttpClient) { }

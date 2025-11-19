@@ -9,7 +9,7 @@ import {UserDetail, UserMinimal} from "../../models/insurance/userModel";
 })
 export class UserService {
 
-  private readonly BASE_URL = 'http://localhost:8081/api/v1/users';
+  private readonly BASE_URL = 'https://api.metacho.com/api/v1/users';
 
   constructor(private httpClient: HttpClient) { }
 

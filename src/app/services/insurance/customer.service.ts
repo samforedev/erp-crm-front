@@ -16,7 +16,7 @@ import {EntityCommonsResponse} from "../../models/commons/commonsModel";
 })
 export class CustomerService {
 
-  private readonly AUTH_API_URL = 'http://localhost:8081/api/v1/customers';
+  private readonly AUTH_API_URL = 'https://api.metacho.com/api/v1/customers';
 
   constructor(private httpClient: HttpClient) { }
 
